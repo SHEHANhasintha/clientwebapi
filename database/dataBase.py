@@ -4,16 +4,22 @@ import io
 class Database:
     "this is a database class"
 
-    def __init__(self):
-        self.client = pymongo.MongoClient("mongodb+srv://logoimage:2XokFEGevhchsP4S@cluster0.hhg7q.mongodb.net/spamdetector?retryWrites=true&w=majority");
-        self.db = self.client["logonames"]
-        self.db = self.db["spamdetector"]
+    def __init__(self,uril,dbName,collectionName):
+        self.uril = uril;
+        print('kpop')
+        self.client = pymongo.MongoClient(uril);
+        """self.db = self.client["logonames"]
+        self.db = self.db["spamdetector"]"""
+        self.db = self.client[dbName]
+        self.db = self.db[collectionName]
+        print("self.client")
 
     def getDatabase(self):
         return self.db
 
     def sendImage(self,img_name,image):
         try:
+            print(self.uril)
             imgInBytes = io.BytesIO()
             image.save(imgInBytes, format='JPEG')
             imageinfo = {"name": img_name, "image": imgInBytes.getvalue()}
